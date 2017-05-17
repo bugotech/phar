@@ -30,7 +30,11 @@
     "autoload": {
         "psr-4": {
             "Bugotech\\Phar\\": "src/"
-        }
+        },
+
+        "files": [
+            "src/helpers.php"
+        ]
     },
 
     "minimum-stability": "dev",
