@@ -57,6 +57,7 @@ class CompilerCommand extends Command
         $this->info('Name.........: ' . $json->name);
         $this->info('Title........: ' . $json->title);
         $this->info('version......: ' . $json->version);
+        $this->info('---------------------------------------------');
 
         event()->listen('Bugotech\Phar\Events\AddFileEvent', function(AddFileEvent $event) {
             $this->info('..' . $event->getInfo());
