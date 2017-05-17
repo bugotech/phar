@@ -13,3 +13,15 @@ if ( ! function_exists('work_path'))
         return getcwd() . ($path ? '/'.$path : $path);
     }
 }
+
+if (! function_exists('in_phar')) {
+    /**
+     * Return is running into phar.
+     *
+     * @return bool
+     */
+    function in_phar()
+    {
+        return ('phar:' !== strtolower(substr(__FILE__, 0, 5)));
+    }
+}
