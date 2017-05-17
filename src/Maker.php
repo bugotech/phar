@@ -1,6 +1,5 @@
 <?php namespace Bugotech\Phar;
 
-
 use Phar;
 use SplFileInfo;
 use Bugotech\IO\Filesystem;

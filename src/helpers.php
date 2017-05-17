@@ -8,8 +8,7 @@ if (! function_exists('work_path'))
      * @param  string  $path
      * @return string
      */
-    function work_path($path = '')
-    {
+    function work_path($path = '') {
         return getcwd() . ($path ? '/' . $path : $path);
     }
 }
