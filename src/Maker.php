@@ -113,7 +113,7 @@ class Maker
      */
     protected function makeBat()
     {
-        $content = $this->files->get(__DIR__ . '/../stubs/bat.sub');
+        $content = $this->files->get(__DIR__ . '/../stubs/bat.stub');
         $content = str_replace('DubbyAlias', $this->alias, $content);
         $this->files->put($this->fileBat, $content);
     }
