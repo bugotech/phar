@@ -1,8 +1,9 @@
 <?php namespace Bugotech\Phar\Commands;
 
-use Bugotech\IO\Filesystem;
 use Bugotech\Phar\Maker;
+use Bugotech\IO\Filesystem;
 use Illuminate\Console\Command;
+use Bugotech\Phar\Events\AddFileEvent;
 
 class CompilerCommand extends Command
 {
@@ -56,6 +57,10 @@ class CompilerCommand extends Command
         $this->info('Name.........: ' . $json->name);
         $this->info('Title........: ' . $json->title);
         $this->info('version......: ' . $json->version);
+
+        event()->listen('Bugotech\Phar\Events\AddFileEvent', function(AddFileEvent $event) {
+            $this->info('..' . $event->getInfo());
+        });
 
         $maker = new Maker($this->files, $json->name, $json->title, $json->version);
         $maker->build();

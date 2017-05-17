@@ -1,6 +1,7 @@
 <?php namespace Bugotech\Phar;
 
 
+use Bugotech\Phar\Events\AddFileEvent;
 use Phar;
 use SplFileInfo;
 use Bugotech\IO\Filesystem;
@@ -198,6 +199,8 @@ class Maker
      */
     private function addFile(Phar $phar, SplFileInfo $file, $strip = true)
     {
+        $this->fireEvent($file->getRealPath());
+
         $path = str_replace(base_path(), '', $file->getRealPath());
         $content = $this->files->get($file);
 
@@ -225,6 +228,8 @@ class Maker
      */
     protected function addBinFile(Phar $phar)
     {
+        $this->fireEvent('BIN: artisan');
+
         $content = $this->files->get(base_path('artisan'));
         $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
         $phar->addFromString('artisan', $content);
@@ -236,6 +241,8 @@ class Maker
      */
     protected function addStub(Phar $phar)
     {
+        $this->fireEvent('STUB');
+
         // Add warning once the phar is older than 30 days
         $defineTime = '';
         if (array_key_exists('package_version', $this->params)) {
@@ -243,7 +250,7 @@ class Maker
             $defineTime = "define('PHAR_DEV_WARNING_TIME', $warningTime);\n";
         }
 
-        $content = $this->files->get(__DIR__ . '/../stubs/compiler.stub');
+        $content = $this->files->get(__DIR__ . '/../stubs/compile.stub');
         $content = str_replace('DubbyAlias', $this->alias, $content);
         $content = str_replace('DubbyDefineDateTime', $defineTime, $content);
 
@@ -256,6 +263,8 @@ class Maker
      */
     protected function addLicence(Phar $phar)
     {
+        $this->fireEvent('LICENCE');
+
         $this->addFile($phar, new SplFileInfo(base_path('LICENSE')), false);
     }
 
@@ -303,5 +312,14 @@ class Maker
             }
         }
         return $output;
+    }
+
+    /**
+     * Executar evento.
+     * @param $filename
+     */
+    protected function fireEvent($filename)
+    {
+        event()->fire(new AddFileEvent($filename));
     }
 }
