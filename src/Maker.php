@@ -290,7 +290,7 @@ class Maker
     private function stripWhitespace($source)
     {
         // Verificar se token_get_all existe
-        if (!function_exists('token_get_all')) {
+        if (! function_exists('token_get_all')) {
             return $source;
         }
 
@@ -298,7 +298,7 @@ class Maker
         foreach (token_get_all($source) as $token) {
             if (is_string($token)) {
                 $output .= $token;
-            } elseif (in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
+            } elseif (in_array($token[0], [T_COMMENT, T_DOC_COMMENT])) {
                 $output .= str_repeat("\n", substr_count($token[1], "\n"));
             } elseif (T_WHITESPACE === $token[0]) {
                 // reduce wide spaces
@@ -312,6 +312,7 @@ class Maker
                 $output .= $token[1];
             }
         }
+
         return $output;
     }
 
