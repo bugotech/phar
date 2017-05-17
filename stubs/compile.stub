@@ -9,7 +9,7 @@
  * the license that is located at the bottom of this file.
  */
 
-Phar::mapPhar('DubbyALias');
+Phar::mapPhar('DubbyAlias');
 Phar::interceptFileFuncs();
 
 DubbyDefineDateTime
