@@ -1,6 +1,6 @@
 <?php
 
-if ( ! function_exists('work_path'))
+if (! function_exists('work_path'))
 {
     /**
      * Get the path to the work with source or phar.
@@ -10,6 +10,6 @@ if ( ! function_exists('work_path'))
      */
     function work_path($path = '')
     {
-        return getcwd() . ($path ? '/'.$path : $path);
+        return getcwd() . ($path ? '/' . $path : $path);
     }
 }
