@@ -141,6 +141,7 @@ class Maker
         $this->name = $name;
         $this->alias = $name . '.phar';
         $this->filePhar = base_path($this->alias);
+        $this->fileBat = base_path($name . '.bat');
     }
 
     /**
