@@ -12,7 +12,7 @@ class PharServiceProvider extends ServiceProvider
     public function register()
     {
         // Registrar so se nao estiver dentro no phar
-        if (! in_phar()) {
+        if (! $this->app->runningInPhar()) {
             $this->commands('Bugotech\Phar\Commands\CompilerCommand');
         }
     }
