@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+/*
+ * This file is part of Bugotech.
+ *
+ * (c) Bruno Gonçalves <bugotech@gmail.com>
+ *
+ * For the full copyright and license information, please view
+ * the license that is located at the bottom of this file.
+ */
+
+Phar::mapPhar('DubbyALias');
+Phar::interceptFileFuncs();
+
+DubbyDefineDateTime
+
+require 'phar://DubbyAlias/artisan';
+
+__HALT_COMPILER();

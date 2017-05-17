@@ -1,0 +1,38 @@
+{
+    "name"       : "bugotech/phar",
+    "description": "The Bugotech Phar package.",
+    "homepage"   : "http://www.netforce.com.br",
+    "license"    : "GPL v.3",
+
+    "authors": [
+        {
+            "name" : "Bruno Gonçalves",
+            "email": "bugotech@gmail.com"
+        }
+    ],
+
+    "require": {
+        "php"                 : ">=5.5.9",
+        "bugotech/foundation" : "dev-master"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*"
+    },
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "url" : "D:\\fontes\\bugotech\\foundation"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "Bugotech\\Phar\\": "src/"
+        }
+    },
+
+    "minimum-stability": "dev",
+    "prefer-stable"    : true
+}
