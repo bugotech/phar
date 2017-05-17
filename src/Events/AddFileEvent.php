@@ -1,6 +1,5 @@
 <?php namespace Bugotech\Phar\Events;
 
-
 class AddFileEvent
 {
     public $filename = '';

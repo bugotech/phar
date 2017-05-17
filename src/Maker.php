@@ -1,11 +1,11 @@
 <?php namespace Bugotech\Phar;
 
 
-use Bugotech\Phar\Events\AddFileEvent;
 use Phar;
 use SplFileInfo;
 use Bugotech\IO\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Bugotech\Phar\Events\AddFileEvent;
 
 class Maker
 {
@@ -172,7 +172,7 @@ class Maker
     }
 
     /**
-     * Adicionar arquivos
+     * Adicionar arquivos.
      * @param Phar $phar
      */
     public function addFiles(Phar $phar)
