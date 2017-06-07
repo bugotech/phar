@@ -180,6 +180,7 @@ class Maker
         $finder->files()
             ->ignoreVCS(true)
             ->name('*.php')
+            ->name('*.stub')
             ->exclude('Tests')
             ->exclude('tests')
             ->exclude('/storage')
@@ -197,8 +198,11 @@ class Maker
      * @param SplFileInfo $file
      * @param bool $strip
      */
-    private function addFile(Phar $phar, SplFileInfo $file, $strip = true)
+    private function addFile(Phar $phar, SplFileInfo $file, $strip = false)
     {
+        // Forçar tirar espaços de PHP.
+        $strip = ($file->getExtension() == 'php') ? true : $strip;
+
         $this->fireEvent($file->getRealPath());
 
         $path = str_replace(base_path(), '', $file->getRealPath());
