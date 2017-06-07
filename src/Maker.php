@@ -187,7 +187,7 @@ class Maker
             ->exclude('/config')
             ->in(base_path());
         foreach ($finder as $file) {
-            $this->addFile($phar, $file, true);
+            $this->addFile($phar, $file);
         }
     }
 
