@@ -24,7 +24,8 @@ if (! function_exists('bin_path')) {
     {
         global $_SERVER;
 
-        $dir = files()->path($_SERVER['SCRIPT_FILENAME']);
+        $info = pathinfo($_SERVER['SCRIPT_FILENAME']);
+        $dir = $info['dirname'];
 
         return $dir . ($path ? '/' . $path : $path);
     }
