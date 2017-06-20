@@ -1,0 +1,4 @@
+auto-service: bugotech.phar
+
+services:
+ - \Bugotech\Phar\PharServiceProvider
