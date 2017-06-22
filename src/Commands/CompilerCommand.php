@@ -77,10 +77,15 @@ class CompilerCommand extends Command
      */
     protected function runScripts($keyList)
     {
+        $this->info('Run scripts');
+        $this->laravel->configure('phar');
         $scripts = $this->laravel['config']->get($keyList, []);
         foreach ($scripts as $item) {
             try {
-                exec($item);
+                $this->info('..' . $item);
+                $out = [];
+                exec($item, $out);
+                $this->info('  ' . trim(implode("\r\n", $out)));
             } catch (\Exception $e) {
                 $this->error(sprintf("Error build: %s\r\nMessage: %s", $item, $e->getMessage()));
             }
