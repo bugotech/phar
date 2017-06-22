@@ -80,7 +80,7 @@ class CompilerCommand extends Command
         $scripts = $this->laravel['config']->get($keyList, []);
         foreach ($scripts as $item) {
             try {
-               exec($item);
+                exec($item);
             } catch (\Exception $e) {
                 $this->error(sprintf("Error build: %s\r\nMessage: %s", $item, $e->getMessage()));
             }
