@@ -63,7 +63,27 @@ class CompilerCommand extends Command
             $this->info('..' . $event->getInfo());
         });
 
+        // Compilar
         $maker = new Maker($this->files, $json->name, $json->title, $json->version);
         $maker->build();
+
+        // Executar scripts
+        $this->runScripts('phar.scripts.after-build');
+    }
+
+    /**
+     * Executar scripts.
+     * @param $keyList
+     */
+    protected function runScripts($keyList)
+    {
+        $scripts = $this->laravel['config']->get($keyList, []);
+        foreach ($scripts as $item) {
+            try {
+               exec($item);
+            } catch (\Exception $e) {
+                $this->error(sprintf("Error build: %s\r\nMessage: %s", $item, $e->getMessage()));
+            }
+        }
     }
 }
