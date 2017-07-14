@@ -53,11 +53,6 @@ class Maker
     protected $pathBase = '';
 
     /**
-     * @var string
-     */
-    protected $fileMain = 'artisan';
-
-    /**
      * @var array
      */
     protected $params = [];
@@ -69,11 +64,10 @@ class Maker
      * @param $version
      * @param $pathBase
      */
-    public function __construct($files, $name, $title, $version, $pathBase, $fileMain = false)
+    public function __construct($files, $name, $title, $version, $pathBase)
     {
         $this->files = $files;
         $this->pathBase = $pathBase;
-        $this->fileMain = ($fileMain !== false) ? $fileMain : $this->fileMain;
         $this->setName($name);
         $this->title = $title;
         $this->version = $version;
@@ -248,9 +242,9 @@ class Maker
     {
         $this->fireEvent('BIN: file main');
 
-        $content = $this->files->get($this->files->combine($this->pathBase, $this->fileMain));
+        $content = $this->files->get($this->files->combine($this->pathBase, 'artisan'));
         $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
-        $phar->addFromString($this->fileMain, $content);
+        $phar->addFromString('artisan', $content);
     }
 
     /**
