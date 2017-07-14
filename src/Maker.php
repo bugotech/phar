@@ -48,6 +48,16 @@ class Maker
     protected $files;
 
     /**
+     * @var string
+     */
+    protected $pathBase = '';
+
+    /**
+     * @var string
+     */
+    protected $fileMain = 'artisan';
+
+    /**
      * @var array
      */
     protected $params = [];
@@ -57,10 +67,13 @@ class Maker
      * @param $name
      * @param $title
      * @param $version
+     * @param $pathBase
      */
-    public function __construct($files, $name, $title, $version)
+    public function __construct($files, $name, $title, $version, $pathBase, $fileMain = false)
     {
         $this->files = $files;
+        $this->pathBase = $pathBase;
+        $this->fileMain = ($fileMain !== false) ? $fileMain : $this->fileMain;
         $this->setName($name);
         $this->title = $title;
         $this->version = $version;
@@ -139,8 +152,8 @@ class Maker
     {
         $this->name = $name;
         $this->alias = $name . '.phar';
-        $this->filePhar = base_path($this->alias);
-        $this->fileBat = base_path($name . '.bat');
+        $this->filePhar = $this->files->combine($this->pathBase, $this->alias);
+        $this->fileBat = $this->files->combine($this->pathBase, $name . '.bat');
     }
 
     /**
@@ -185,7 +198,7 @@ class Maker
             ->exclude('tests')
             ->exclude('/storage')
             ->exclude('/config')
-            ->in(base_path());
+            ->in($this->pathBase);
         foreach ($finder as $file) {
             $this->addFile($phar, $file);
         }
@@ -205,7 +218,7 @@ class Maker
 
         $this->fireEvent($file->getRealPath());
 
-        $path = str_replace(base_path(), '', $file->getRealPath());
+        $path = str_replace($this->pathBase, '', $file->getRealPath());
         $content = $this->files->get($file);
 
         // Tratar espacos?
@@ -232,11 +245,11 @@ class Maker
      */
     protected function addBinFile(Phar $phar)
     {
-        $this->fireEvent('BIN: artisan');
+        $this->fireEvent('BIN: file main');
 
-        $content = $this->files->get(base_path('artisan'));
+        $content = $this->files->get($this->files->combine($this->pathBase, $this->fileMain));
         $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
-        $phar->addFromString('artisan', $content);
+        $phar->addFromString($this->fileMain, $content);
     }
 
     /**
@@ -269,7 +282,7 @@ class Maker
     {
         $this->fireEvent('LICENCE');
 
-        $this->addFile($phar, new SplFileInfo(base_path('LICENSE')), false);
+        $this->addFile($phar, new SplFileInfo($this->files->combine($this->pathBase, 'LICENSE')), false);
     }
 
     /**
@@ -278,7 +291,7 @@ class Maker
      */
     protected function addUpdateFile(Phar $phar)
     {
-        $file = base_path('update.json');
+        $file = $this->files->combine($this->pathBase, 'update.json');
         if ($this->files->exists($file)) {
             $this->addFile($phar, new SplFileInfo($file), false);
         }

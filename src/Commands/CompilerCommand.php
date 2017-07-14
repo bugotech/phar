@@ -64,7 +64,7 @@ class CompilerCommand extends Command
         });
 
         // Compilar
-        $maker = new Maker($this->files, $json->name, $json->title, $json->version);
+        $maker = new Maker($this->files, $json->name, $json->title, $json->version, base_path());
         $maker->build();
 
         // Executar scripts
