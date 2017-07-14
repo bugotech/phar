@@ -281,9 +281,13 @@ class Maker
      */
     protected function addLicence(Phar $phar)
     {
-        $this->fireEvent('LICENCE');
+        $file = $this->files->combine($this->pathBase, 'LICENSE');
+        if (! $this->files->exists($file)) {
+            return;
+        }
 
-        $this->addFile($phar, new SplFileInfo($this->files->combine($this->pathBase, 'LICENSE')), false);
+        $this->fireEvent('LICENCE');
+        $this->addFile($phar, new SplFileInfo($file), false);
     }
 
     /**
