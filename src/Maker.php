@@ -198,6 +198,7 @@ class Maker
             ->exclude('tests')
             ->exclude('/storage')
             ->exclude('/config')
+            ->exclude('/build')
             ->in($this->pathBase);
         foreach ($finder as $file) {
             $this->addFile($phar, $file);
