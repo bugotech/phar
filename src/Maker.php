@@ -43,6 +43,11 @@ class Maker
     protected $fileBat = '';
 
     /**
+     * @var string
+     */
+    public $fileNameBin = 'artisan';
+
+    /**
      * @var Filesystem
      */
     protected $files;
@@ -240,9 +245,14 @@ class Maker
      */
     protected function addBinFile(Phar $phar)
     {
+        $fileBin = $this->files->combine($this->pathBase, $this->fileNameBin);
+        if (! $this->files->exists($fileBin)) {
+            return;
+        }
+
         $this->fireEvent('BIN: file main');
 
-        $content = $this->files->get($this->files->combine($this->pathBase, 'artisan'));
+        $content = $this->files->get($fileBin);
         $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
         $phar->addFromString('artisan', $content);
     }
